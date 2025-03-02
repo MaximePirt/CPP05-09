@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 //=============Exceptions======================
 
@@ -111,4 +112,17 @@ void Bureaucrat::IncrementGrade()
 	this->grade--;
 	std::cout << this->name << " has been promoted to grade " << this->grade << std::endl;
 
+}
+
+//New function
+void Bureaucrat::signForm(Form &contract)
+{
+	if (this->grade <= contract.getSignRequired())
+	{
+		contract.beSigned(*this);
+		std::cout << this->name << " signed " << contract.getName() << std::endl;
+	}
+	else
+		std::cout << this->name << "couldn't sign " << contract.getName() << "because its grade is too low" << std::endl;
+	
 }

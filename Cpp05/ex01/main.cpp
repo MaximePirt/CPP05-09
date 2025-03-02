@@ -1,41 +1,49 @@
-#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 
 int main()
 {
-	std::cout << "Bureaucrat creation" << std::endl;
+	std::cout << "___Bureaucrat creations___" << std::endl;
+	Bureaucrat boss =  Bureaucrat("boss", 10);
+	Bureaucrat nottheboss =  Bureaucrat("looser", 100);
 	try{
-		Bureaucrat first =  Bureaucrat("first", 149);
-		Bureaucrat second =  Bureaucrat("second", 2);
+		std::cout << "___Form creation___" << std::endl;
+		Form highlevelform = Form("classic", 12, 12);
+		std::cout << "====Now it ll be signed====" << std::endl;
+		boss.signForm(highlevelform);
+		std::cout << highlevelform << std::endl;
 
-		second.IncrementGrade();
-		first.DecrementGrade();
+		// Theses tests will throw an error
 
-		std::cout << "\n\nHere is first bureaucrat overload" << std::endl;
-		std::cout << first << std::endl;
-		std::cout << "\n\nHere is second bureaucrat overload" << std::endl;
-		std::cout << second << std::endl;
-		//This will fail, grade too high and too low
-		// second->IncrementGrade();
-		// first->DecrementGrade();
+		// Signing twice
+		// boss.signForm(highlevelform);
 
-		// Theses will fail : constructor failure because of grade or name
-		// Bureaucrat third = Bureaucrat("third_fail", 0);
-		// Bureaucrat fourth = Bureaucrat("fourth_fail", 156);
-		// Bureaucrat();
+		// Signing from a not allowed bureaucrat
+		// highlevelform.beSigned(nottheboss);
+
+		// Empty form
+		// Form impossibleform = Form();
+		
+		// Form toohighlevelform = Form("impossible", 0, 0);
+		// Form toolowlevelform = Form("nonono", 151, 200);
+
 	}
-	catch(const GradeTooHighException& e)
+	catch(const GradeTooHighExceptionForm& e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	catch(const GradeTooLowException& e)
+	catch(const GradeTooLowExceptionForm& e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	catch(const NoNameException& e)
+	catch(const EmptyForm& e)
 	{
 		std::cerr << e.what() << std::endl;
 
+	}
+	catch(const AlreadySigned& e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 
 }

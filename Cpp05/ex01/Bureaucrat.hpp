@@ -5,7 +5,9 @@
 #include <string>
 #include <cstring>
 
-class GradeTooHighException 
+class Form;
+
+class GradeTooHighException 	
 {
 	public:
 		GradeTooHighException();
@@ -35,17 +37,20 @@ class NoNameException
 class Bureaucrat
 {
 	public:
+	//Constructor
 		Bureaucrat();
 		Bureaucrat(std::string name, int grade);
 		Bureaucrat(const Bureaucrat &obj);
 		Bureaucrat &operator=(const Bureaucrat &old);
-		Bureaucrat &operator<<(const Bureaucrat &obj);
 		~Bureaucrat();
+	//Getter
 		std::string getName() const;
 		int getGrade() const;
+	//Functions
 		void IncrementGrade();
 		void DecrementGrade();
-		
+	//New function
+		void signForm(Form &contract);
 	protected:
 
 	private:
