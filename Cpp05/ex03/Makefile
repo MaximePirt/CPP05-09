@@ -1,4 +1,5 @@
-SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp PresidentialPardonForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp
+SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp PresidentialPardonForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp \
+			Intern.cpp
 
 SRCDIR =
 OBJ_D = objs
@@ -6,7 +7,7 @@ OBJ_FILES = $(SRC_FILES:%.cpp=$(OBJ_D)/%.o)
 CC = c++
 CFLAGS = -g -Wall -Werror -Wextra -std=c++98
 
-NAME = Multiple_Form
+NAME = Hello_Intern
 RM = rm -rf
 
 DEFCOLOR = \033[0;39m
