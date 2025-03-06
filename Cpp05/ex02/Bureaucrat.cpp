@@ -1,36 +1,21 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 //=============Exceptions======================
 
-GradeTooHighException::GradeTooHighException()
+const char *GradeTooHighException::what() const throw()
 {
-	this->error = "Grade too high for a Bureaucrat";
+	return("Grade too high for a Bureaucrat");	
 }
 
-const std::string &GradeTooHighException::what() const
+const char *GradeTooLowException::what() const throw()
 {
-	return (this->error);
+	return("Grade too low for a Bureaucrat");
 }
 
-GradeTooLowException::GradeTooLowException()
+const char *NoNameException::what() const throw()
 {
-	this->error = "Grade too low for a Bureaucrat";
-}
-
-const std::string &GradeTooLowException::what() const
-{
-	return (this->error);
-}
-
-NoNameException::NoNameException()
-{
-	this->error = "You forgot to put a name to this poor Bureaucrat";
-}
-
-const std::string &NoNameException::what() const
-{
-	return (this->error);
+	return ( "You forgot to put a name to this poor Bureaucrat");
 }
 
 
@@ -113,7 +98,7 @@ void Bureaucrat::IncrementGrade()
 }
 
 //New function
-void Bureaucrat::signForm(Form &contract)
+void Bureaucrat::signForm(AForm &contract)
 {
 	if (this->grade <= contract.getSignRequired())
 	{
@@ -121,6 +106,19 @@ void Bureaucrat::signForm(Form &contract)
 		std::cout << this->name << " signed " << contract.getName() << std::endl;
 	}
 	else
-		std::cout << this->name << "couldn't sign " << contract.getName() << "because its grade is too low" << std::endl;
+		std::cout << this->name << " couldn't sign " << contract.getName() << " because its grade is too low" << std::endl;
 	
+}
+
+void Bureaucrat::executeForm(AForm const & form)
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << this->name << " executed " << form.getName() << std::endl;
+	}
+	catch(std::exception &e)
+	{
+		std::cerr << this->name << " failed to execute " << form.getName() << " because of " << e.what() << std::endl;
+	}
 }

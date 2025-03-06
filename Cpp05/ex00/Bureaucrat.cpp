@@ -48,15 +48,13 @@ Bureaucrat::Bureaucrat(std::string name, int grade)
 		throw(GradeTooHighException());
 	if (grade > 150)
 		throw(GradeTooLowException());
-	this->name = name;
+	const_cast<std::string&>(this->name) = name;
 	this->grade = grade;
 	std::cout << this->name << " has been created" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &obj)
+Bureaucrat::Bureaucrat(const Bureaucrat &obj) : name(obj.name), grade(obj.grade)
 {
-	this->grade = obj.grade;
-	this->name = obj.name;
 	std::cout << "Copy constructor for " << this->name << " has been called." << std::endl;
 }
 
@@ -65,7 +63,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &old)
 	if (this != &old)
 	{
 		this->grade = old.grade;
-		this->name = old.name;
+		const_cast<std::string&>(this->name) = old.name;
 	}
 	std::cout << "Operator= constructor for " << this->name << " has been called." << std::endl;
 	return (*this);

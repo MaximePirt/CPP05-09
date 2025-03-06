@@ -5,33 +5,27 @@
 #include <string>
 #include <cstring>
 
-class Form;
+class AForm;
 
-class GradeTooHighException 	
+class GradeTooHighException : public std::exception
 {
 	public:
-		GradeTooHighException();
-		const std::string& what() const;
+		const char *what() const throw();
 	private:
-		std::string error;
 };
 
-class GradeTooLowException 
+class GradeTooLowException : public std::exception
 {
 	public:
-		GradeTooLowException();
-		const std::string& what() const;
+		const char *what() const throw();
 	private:
-		std::string error;
 };
 
-class NoNameException
+class NoNameException : public std::exception
 {
 	public:
-		NoNameException();
-		const std::string& what() const;
+		const char *what() const throw();
 	private:
-		std::string error;
 };
 
 class Bureaucrat
@@ -50,7 +44,8 @@ class Bureaucrat
 		void IncrementGrade();
 		void DecrementGrade();
 	//New function
-		void signForm(Form &contract);
+		void signForm(AForm &contract);
+		void executeForm(AForm const & form);
 	protected:
 
 	private:
