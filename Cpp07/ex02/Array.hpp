@@ -40,11 +40,13 @@ class Array
 			{
 				if (this->_elements)
 				{
-						delete _elements;
-						_elements = NULL;
+						delete [] this->_elements;
+						this->_elements = NULL;
 				}
-				this->_elements = new T[old.len];
+				this->_elements = new T[old._len];
 				this->_len = old._len;
+				for (unsigned int i = 0; i < _len; i++)
+					this->_elements[i] = old._elements[i];
 			}
 			return (*this);
 		}

@@ -8,6 +8,7 @@ int main()
 {
     try
     {
+        std::cout << "Create an Int array " << std::endl;
         Array<int> objInt(5);
         for (int i = 0; i < 5; i++)
         {
@@ -23,13 +24,15 @@ int main()
     }
     try
     {
-        Array<std::string> objInt(5);
+        std::cout << "Create String array " << std::endl;
+
+        Array<std::string> objStr(5);
         for (int i = 0; i < 5; i++)
         {
-            objInt[i] = "Vive les pâtes";
-            std::cout << "obj[" << i << "] = " << objInt[i] << "\n";
+            objStr[i] = "Vive les pâtes";
+            std::cout << "obj[" << i << "] = " << objStr[i] << "\n";
         }
-        std::cout << "obj[" << 12 << "] = " << objInt[12] << "\n";
+        std::cout << "obj[" << 12 << "] = " << objStr[12] << "\n";
 
     }
     catch(const std::exception& e)
@@ -38,15 +41,26 @@ int main()
     }    
     try
     {
-        Array<float> objInt(5);
+        std::cout << "Create Floats array " << std::endl;
+
+        Array<float> objFloat(5);
         float i = 1.23;
         for (double j = 0; j < 5; j++)
         {
-            objInt[j] = i;
-            std::cout << "obj[" << j << "] = " << objInt[j] << "\n";
+            objFloat[j] = i;
+            std::cout << "obj[" << j << "] = " << objFloat[j] << "\n";
             i += 0.2;
         }
-        std::cout << "obj[" << 12 << "] = " << objInt[12] << "\n";
+        std::cout << "Modifying array" << std::endl;
+
+        Array<float> objfloat2(5);
+        objfloat2 = objFloat;
+        objfloat2[2] = 8;
+        for (double j = 0; j < 5; j++)
+        {
+            std::cout << "obj1[" << j << "] = " << objFloat[j] << "\n";
+            std::cout << "obj2[" << j << "] = " << objfloat2[j] << "\n";
+        }
     }
     catch(const std::exception& e)
     {
