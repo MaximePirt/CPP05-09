@@ -207,44 +207,96 @@ void print_map(std::map<t_date, double> data)
 void BitcoinExchange::compareData()
 {
 	std::map<t_date, double>::iterator it;
-	for (it = this->_data.begin(); it != this->_data.end(); it++)
+	for (it = this->_data.begin(); it != this->_data.end(); ++it)
 	{
-		if (it->first.error == "")
-		{
-			// it->first.error = "Error: Date must be in format YYYY-MM-DD";
-			continue;
-		}
 		if (it->first.error != "No error")
 		{
 			std::cout << it->first.error << std::endl;
 			continue;
 		}
-		else if (this->_btc_data.find(it->first) != this->_btc_data.end())
+		std::map<t_date, double>::iterator btc_it = this->_btc_data.find(it->first);
+		if (btc_it != this->_btc_data.end())
 		{
-			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second << \
-				" = " << this->_btc_data[it->first] * this->_data[it->first] << std::endl;
+			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
+				<< " = " << btc_it->second * it->second << std::endl;
 		}
 		else
 		{
 			std::map<t_date, double>::iterator second_it;
-			for (second_it = this->_btc_data.begin(); second_it != this->_btc_data.end(); second_it++)
+			if (this->_btc_data.empty())
+			{
+				std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
+					<< " = " << 0 << std::endl;
+				continue;
+			}
+			for (second_it = this->_btc_data.begin(); second_it != this->_btc_data.end(); ++second_it)
 			{
 				if (it->first <= second_it->first)
 				{
-					second_it--;
-					std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second << \
-					" = " << this->_btc_data[second_it->first] * this->_data[it->first] << std::endl;
+					if (second_it != this->_btc_data.begin())
+						--second_it;
 					break;
 				}
 			}
 			if (second_it == this->_btc_data.end())
-			{
-				std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second << \
-				" = " << this->_btc_data.rbegin()->second * this->_data[it->first] << std::endl;
-			}
+				second_it = --this->_btc_data.end(); // dernier élément
+			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
+				<< " = " << second_it->second * it->second << std::endl;
 		}
 	}
 }
+
+/*
+void BitcoinExchange::compareData()
+{
+	std::map<t_date, double>::iterator it;
+	for (it = this->_data.begin(); it != this->_data.end(); ++it)
+	{
+		if (it->first.error != "No error")
+		{
+			std::cout << it->first.error << std::endl;
+			continue;
+		}
+
+		std::map<t_date, double>::iterator btc_it = this->_btc_data.find(it->first);
+
+		if (btc_it != this->_btc_data.end())
+		{
+			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
+				<< " = " << btc_it->second * it->second << std::endl;
+		}
+		else
+		{
+			std::map<t_date, double>::iterator second_it;
+			t_date closest;
+
+			if (this->_btc_data.empty())
+			{
+				std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
+					<< " = " << 0 << std::endl;
+				continue;
+			}
+
+			for (second_it = this->_btc_data.begin(); second_it != this->_btc_data.end(); ++second_it)
+			{
+				if (it->first <= second_it->first)
+				{
+					if (second_it != this->_btc_data.begin())
+						--second_it;
+					break;
+				}
+			}
+
+			if (second_it == this->_btc_data.end())
+				second_it = --this->_btc_data.end(); // dernier élément
+
+			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
+				<< " = " << second_it->second * it->second << std::endl;
+		}
+	}
+}
+
+*/
 
 
 /**
