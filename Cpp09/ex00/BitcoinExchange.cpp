@@ -95,6 +95,15 @@ int str_is_number(std::string str)
 	return (0);
 }
 
+/**
+ * @brief Check if a date is valid in the right
+ * @param year : the year to check
+ * @param month : the month to check
+ * @param day : the day to check
+ * @return 0 if the date is valid, 1 otherwise
+ * @note The date must be in the format YYYY-MM-DD
+ * 
+ */
 int date_is_wrong(int year, int month, int day, t_date *date)
 {
 	if (year < 2009)
@@ -175,32 +184,14 @@ t_date str_is_date(std::string str)
 	return (date);
 }
 
-/**
- * @brief Print a map
- * @param data : the map to print
- * @return void
- * @note This function is used for debugging
- */
-void print_map(std::map<t_date, double> data)
-{
-	std::cout << "Print map" << std::endl;
-	std::cout << "Size of map : " << data.size() << std::endl;
-
-	std::map<t_date, double>::iterator it;
-	for (it = data.begin(); it != data.end(); it++)
-	{
-		std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second << std::endl;
-		std::cout << "POSSIBLE ERROR : " << it->first.error << std::endl;
-
-	}
-}
 
 // Mains functions
 
 /**
- * @brief Compare the data from the file with the stock data
- * 			Print it in the format "key => value = value * stock_value"
- * 			If the key is not in the stock data, search for the closest date
+ * @brief Compare data from the input file and the database
+ * 		Print the result in the format YYYY-MM-DD => value = value
+ * 		If the date is not in the database, use the last date in the database
+ * 		If the date is not in the input file, print an error message
  * @param void
  * @return void
  */
@@ -245,59 +236,6 @@ void BitcoinExchange::compareData()
 		}
 	}
 }
-
-/*
-void BitcoinExchange::compareData()
-{
-	std::map<t_date, double>::iterator it;
-	for (it = this->_data.begin(); it != this->_data.end(); ++it)
-	{
-		if (it->first.error != "No error")
-		{
-			std::cout << it->first.error << std::endl;
-			continue;
-		}
-
-		std::map<t_date, double>::iterator btc_it = this->_btc_data.find(it->first);
-
-		if (btc_it != this->_btc_data.end())
-		{
-			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
-				<< " = " << btc_it->second * it->second << std::endl;
-		}
-		else
-		{
-			std::map<t_date, double>::iterator second_it;
-			t_date closest;
-
-			if (this->_btc_data.empty())
-			{
-				std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
-					<< " = " << 0 << std::endl;
-				continue;
-			}
-
-			for (second_it = this->_btc_data.begin(); second_it != this->_btc_data.end(); ++second_it)
-			{
-				if (it->first <= second_it->first)
-				{
-					if (second_it != this->_btc_data.begin())
-						--second_it;
-					break;
-				}
-			}
-
-			if (second_it == this->_btc_data.end())
-				second_it = --this->_btc_data.end(); // dernier élément
-
-			std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << " => " << it->second
-				<< " = " << second_it->second * it->second << std::endl;
-		}
-	}
-}
-
-*/
-
 
 /**
  * @brief Stock data from database data.csv in a map
@@ -422,9 +360,5 @@ void BitcoinExchange::readInputFile(std::string filename)
 	}
 	file.close();
 	stockDataFromDatabase();
-	std::cout << "---------" << std::endl;
-
-	print_map(this->_data);
-	std::cout << "---------" << std::endl;
 	compareData();
 }
