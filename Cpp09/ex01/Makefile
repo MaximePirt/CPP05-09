@@ -1,4 +1,4 @@
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp RPN.cpp
 
 SRCDIR =
 OBJ_D = objs
@@ -6,7 +6,7 @@ OBJ_FILES = $(SRC_FILES:%.cpp=$(OBJ_D)/%.o)
 CC = c++
 CFLAGS = -g -Wall -Werror -Wextra -std=c++98
 
-NAME = Program
+NAME = RPN
 RM = rm -rf
 
 DEFCOLOR = \033[0;39m

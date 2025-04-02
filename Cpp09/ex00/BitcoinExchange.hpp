@@ -18,8 +18,6 @@
 		}
 		return result;
 	}
-
-
 	typedef struct s_date
 	{
 		int year;

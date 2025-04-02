@@ -1,13 +1,12 @@
-#include "BitcoinExchange.hpp"
-#include <iostream>
+#include "RPN.hpp"
 
 int main(int argc, char const *argv[])
 {
 	try {
 		if (argc != 2)
 			throw std::out_of_range("Input errors, Program must have 1 arguments");
-		BitcoinExchange programLaunch;
-		programLaunch.readInputFile(argv[1]);
+		RPN programLaunch;
+		programLaunch.Calculate(argv[1]);
 	}
 	catch(std::exception &e)
 	{
@@ -15,3 +14,4 @@ int main(int argc, char const *argv[])
 	}
 	return (0);
 }
+

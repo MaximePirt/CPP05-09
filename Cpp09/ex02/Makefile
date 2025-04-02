@@ -6,7 +6,7 @@ OBJ_FILES = $(SRC_FILES:%.cpp=$(OBJ_D)/%.o)
 CC = c++
 CFLAGS = -g -Wall -Werror -Wextra -std=c++98
 
-NAME = Program
+NAME = PmergeMe
 RM = rm -rf
 
 DEFCOLOR = \033[0;39m
