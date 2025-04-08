@@ -1,4 +1,4 @@
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp PmergeMe.cpp
 
 SRCDIR =
 OBJ_D = objs

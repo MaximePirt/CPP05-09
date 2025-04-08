@@ -14,7 +14,7 @@ T stringToValue(const std::string& str) {
 	if (ss.fail() || !ss.eof()) {
 		return T();
 	}
-	return result;
+	return (result);
 }
 
 template <typename T>
