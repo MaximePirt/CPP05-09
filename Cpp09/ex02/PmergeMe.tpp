@@ -1,4 +1,5 @@
 #pragma once
+#include "PmergeMe.hpp"
 
 /**
  * @brief Convert string to value
@@ -17,6 +18,16 @@ T stringToValue(const std::string& str) {
 	return (result);
 }
 
+inline int is_all_digit(std::string token)
+{
+	for (size_t i = 0; i < token.length(); ++i)
+	{
+		if (!isdigit(token[i]))
+			return (1);
+	}
+	return (0);
+}
+
 /**
  * @brief Check the input
  * @param str string to check
@@ -29,7 +40,7 @@ template <typename T>
 T check_input(char **str, T &cont)
 {
 	char *input = *str;
-	for (int i = 1; input != '\0'; ++i)
+	for (int i = 1; input != NULL; ++i)
 	{
 		if (!str[i])
 			break;
@@ -38,7 +49,7 @@ T check_input(char **str, T &cont)
 		std::string token;
 		while (ss >> token)
 		{
-			if (std::all_of(token.begin(), token.end(), ::isdigit))
+			if (is_all_digit(token) == 0)
 			{
 				size_t len = token.length();
 				for (size_t i = 0; i < len; ++i)
@@ -84,20 +95,20 @@ void creation_stack(T &cont, U &pair)
 	}
 }
 
-/**
- * @brief Swap values
- * @param a first value
- * @param b second value
- * @return
- * @note This function is used to swap two values
- */
-template <typename T>
-void swap(T &a, T &b)
-{
-	T c = a;
-	a = b;
-	b = c;
-}
+// /**
+//  * @brief Swap values
+//  * @param a first value
+//  * @param b second value
+//  * @return
+//  * @note This function is used to swap two values
+//  */
+// template <typename T>
+// void swap(T &a, T &b)
+// {
+// 	T c = a;
+// 	a = b;
+// 	b = c;
+// }
 
 
 /**
@@ -112,14 +123,14 @@ void ford_pair(T &pair)
 	for (size_t i = 0; i < pair.size(); ++i)
 	{
 		if (pair[i].second != -1 && pair[i].first > pair[i].second)
-			swap(pair[i].first, pair[i].second);
+			std::swap(pair[i].first, pair[i].second);
 	}
 	for (size_t i = 0; i < pair.size(); ++i)
 	{
 		for (size_t j = i + 1; j < pair.size(); ++j)
 		{
 			if (pair[i].first > pair[j].first)
-				swap(pair[i], pair[j]);
+				std::swap(pair[i], pair[j]);
 		}
 	}
 }
@@ -172,7 +183,7 @@ T generate_jacob_indices(size_t size)
 	}
 	for (size_t i = 0; i < size; ++i)
 	{
-		if (std::find(indices.begin(), indices.end(), i) == indices.end())
+		if (std::find(indices.begin(), indices.end(), static_cast<int>(i)) == indices.end())
 			indices.push_back(i);
 	}
 	return (indices);
