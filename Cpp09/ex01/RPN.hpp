@@ -40,7 +40,11 @@ struct t_calc
 			case '*':
 				return a * b;
 			case '/':
+			{
+				if (b == 0)
+					throw std::runtime_error("Error: Division by zero");
 				return b != 0 ? a / b : 0;
+			}
 			default:
 				throw std::runtime_error("Error: Invalid operator");
 		}

@@ -36,7 +36,7 @@ std::stack<int> parse(std::string input)
 			size_t len = token.length();
 			for (size_t i = 0; i < len; ++i)
 			{
-				if (token[i] == '0')
+				if (token[i] == '0' && token[i + 1])
 				{
 					token.erase(i, 1);
 					--i;
