@@ -259,27 +259,23 @@ void BitcoinExchange::stockDataFromDatabase()
 		throw std::invalid_argument("Error: first line must be 'date,exchange_rate'.");
 	while (std::getline(file, line))
 	{
-		std::string error;
 		if (line.empty())
-			error =  "Error: line cannot be empty.";	
+			throw std::runtime_error("Error: line cannot be empty.");	
 		std::string key = line.substr(0, line.find(","));
 		std::string value = line.substr(line.find(",") + 1);
 		if (key.empty() || value.empty())
-			error =  "Error: key or value cannot be empty.";
+			throw std::runtime_error("Error: key or value cannot be empty.");
 		int all_numbers = str_is_number(value);
 		if (all_numbers)
-			error =  "Error: value must be a positiv number.";
+			throw std::runtime_error("Error: value must be a positiv number.");
 		t_date date = str_is_date(key);
-		if (error.size() > 0)
-		{
-			date.error = error;
-			date.year = 9999;
-			date.month = 99;
-			date.day = 99;
-		}	
 		double val = 0;
 		if (!all_numbers)
 			val = stringToValue<double>(value);
+		if (date.error != "No error")
+			throw std::runtime_error("Error: " + date.error);
+		if (val < 0)
+			throw std::runtime_error("Error: Database: value cannot be negative.");
 		this->_btc_data[date] = val;
 	}
 }

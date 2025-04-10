@@ -5,7 +5,7 @@ int main(int argc, char const *argv[])
 {
 	try {
 		if (argc != 2)
-			throw std::out_of_range("Input errors, Program must have 1 arguments");
+			throw std::out_of_range("Error: could not open file.");
 		BitcoinExchange programLaunch;
 		programLaunch.readInputFile(argv[1]);
 	}
