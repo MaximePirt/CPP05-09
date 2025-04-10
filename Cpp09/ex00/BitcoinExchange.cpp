@@ -251,33 +251,36 @@ void BitcoinExchange::stockDataFromDatabase()
 	std::ifstream file("data.csv");
 	if (!file.is_open())
 	{
-		throw std::invalid_argument("Error: File does not exist or cannot be opened.");
+		throw std::invalid_argument("Error: Database: File does not exist or cannot be opened.");
 	}
 	std::string line;
 	std::getline(file, line);
 	if (line != "date,exchange_rate")
-		throw std::invalid_argument("Error: first line must be 'date,exchange_rate'.");
+		throw std::invalid_argument("Error: Database: first line must be 'date,exchange_rate'.");
 	while (std::getline(file, line))
 	{
 		if (line.empty())
-			throw std::runtime_error("Error: line cannot be empty.");	
+			throw std::runtime_error("Error: Database: line cannot be empty.");	
 		std::string key = line.substr(0, line.find(","));
 		std::string value = line.substr(line.find(",") + 1);
 		if (key.empty() || value.empty())
-			throw std::runtime_error("Error: key or value cannot be empty.");
+			throw std::runtime_error("Error: Database: key or value cannot be empty.");
 		int all_numbers = str_is_number(value);
 		if (all_numbers)
-			throw std::runtime_error("Error: value must be a positiv number.");
+			throw std::runtime_error("Error: Database: value must be a positiv number.");
 		t_date date = str_is_date(key);
 		double val = 0;
 		if (!all_numbers)
 			val = stringToValue<double>(value);
 		if (date.error != "No error")
-			throw std::runtime_error("Error: " + date.error);
+			throw std::runtime_error("Error: Database: " + date.error);
 		if (val < 0)
 			throw std::runtime_error("Error: Database: value cannot be negative.");
 		this->_btc_data[date] = val;
 	}
+	if (this->_btc_data.empty())
+		throw std::runtime_error("Error: Database: no data found.");
+	file.close();
 }
 
 
@@ -355,6 +358,8 @@ void BitcoinExchange::readInputFile(std::string filename)
 		this->_data[date] = val;
 	}
 	file.close();
+	if (this->_data.empty())
+		throw std::runtime_error("Error: No data found in file.");
 	stockDataFromDatabase();
 	compareData();
 }
