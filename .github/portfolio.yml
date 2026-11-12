@@ -1,0 +1,15 @@
+origin: 42
+domains: [systems]
+summary:
+  fr: 42 • C++ / STL
+  en: 42 • C++ / STL
+description:
+  fr: >
+    Cinq modules C++ avancés explorant les exceptions, les templates génériques,
+    et les conteneurs STL. Implémentations d'exceptions personnalisées,
+    de templates de fonctions et de classes, et d'algorithmes STL.
+  en: >
+    Five advanced C++ modules exploring exception handling, generic templates,
+    and STL containers. Custom exception implementations, function and class
+    templates, and practical STL algorithms.
+stack: [C++98, STL, Templates, Exceptions]
